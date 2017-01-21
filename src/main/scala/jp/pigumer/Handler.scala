@@ -13,11 +13,10 @@ class Handler extends RequestStreamHandler {
 
     import spray.json.DefaultJsonProtocol._
 
-    val in: Array[Byte] = Stream.continually(input.read).map(_.toByte).toArray
+    val in: Array[Byte] = Stream.continually(input.read).takeWhile(_ != -1).map(_.toByte).toArray
     val json: String = new String(in, StandardCharsets.UTF_8)
 
-    val formData: String = json.parseJson.convertTo[String]
-
-    output.write(Base64.getDecoder.decode(formData))
+    val formData = Base64.getDecoder.decode(json.parseJson.convertTo[String])
+    output.write(formData)
   }
 }

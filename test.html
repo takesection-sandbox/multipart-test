@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <script src="environment.js"></script>
+        <script>
+            window.onload = function() {
+              window.document.getElementById('form').action = AWS_LAMBDA_URL
+            }
+        </script>
+    </head>
+    <body>
+        <form id="form"
+              method="POST"
+              enctype="multipart/form-data">
+        <div>
+            <input type="file" name="file"/>
+        </div>
+        <div>
+            <input type="submit"/>
+        </div>
+        </form>
+    </body>
+</html>
