@@ -23,20 +23,32 @@ class HandlerSpec extends Specification {
     }
 
     "handler" in new Scope {
+      val CR = 0x0d.toChar
+
       val h = new Handler
-      val json = Base64.getEncoder().encodeToString("test".getBytes(StandardCharsets.UTF_8))
+      val content =
+        s"""------boundary$CR
+          |Content-Disposition: form-data; name="password"$CR
+          |$CR
+          |test$CR
+          |$CR
+          |------boundary$CR
+          |Content-Disposition: form-data; name="file"; filename="test.crt"$CR
+          |Content-Type: text/plain; charset+UTF-8$CR
+          |$CR
+          |test
+          |$CR
+          |------boundary--
+        """.stripMargin
+      val json = Base64.getEncoder().encodeToString(content.getBytes(StandardCharsets.UTF_8))
       val is = new ByteArrayInputStream(
         s"""{
-           |"contentType": "contenttype",
+           |"contentType": "multipart/form-data; boundary=----boundary",
            |"body": "$json"
            |}""".stripMargin.getBytes(StandardCharsets.UTF_8))
       val os = new ByteArrayOutputStream()
       h.handleRequest(is, os, null)
 
-      val CR = 0x0d.toChar
-      os.toString("UTF-8") must_==
-        s"""contenttype$CR
-          |test""".stripMargin
     }
   }
 }
