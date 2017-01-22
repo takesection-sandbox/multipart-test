@@ -25,11 +25,18 @@ class HandlerSpec extends Specification {
     "handler" in new Scope {
       val h = new Handler
       val json = Base64.getEncoder().encodeToString("test".getBytes(StandardCharsets.UTF_8))
-      val is = new ByteArrayInputStream(s""""$json"""".getBytes(StandardCharsets.UTF_8))
+      val is = new ByteArrayInputStream(
+        s"""{
+           |"contentType": "contenttype",
+           |"body": "$json"
+           |}""".stripMargin.getBytes(StandardCharsets.UTF_8))
       val os = new ByteArrayOutputStream()
       h.handleRequest(is, os, null)
 
-      os.toString("UTF-8") must_== "test"
+      val CR = 0x0d.toChar
+      os.toString("UTF-8") must_==
+        s"""contenttype$CR
+          |test""".stripMargin
     }
   }
 }

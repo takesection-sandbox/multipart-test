@@ -21,7 +21,11 @@ $ activator assembly
 
 ```
 #set($inputParams = $util.base64Encode($input.body))
-"$inputParams"
+#set($contentType = $input.params().header.get('Content-Type'))
+{
+"contentType": "$contentType",
+"body": "$inputParams"
+}
 ```
 
 ## API Gateway の URL を設定
