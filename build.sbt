@@ -13,6 +13,9 @@ libraryDependencies += "com.amazonaws" % "aws-lambda-java-core" % "1.1.0"
 // https://mvnrepository.com/artifact/io.spray/spray-json_2.11
 libraryDependencies += "io.spray" % "spray-json_2.11" % "1.3.3"
 
+// https://mvnrepository.com/artifact/org.parboiled/parboiled-scala_2.11
+libraryDependencies += "org.parboiled" % "parboiled-scala_2.11" % "1.1.8"
+
 // https://mvnrepository.com/artifact/org.specs2/specs2-core_2.11
 libraryDependencies += "org.specs2" % "specs2-core_2.11" % "3.8.7" % Test
 scalacOptions in Test ++= Seq("-Yrangepos")
