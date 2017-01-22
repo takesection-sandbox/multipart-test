@@ -10,9 +10,6 @@ scalaVersion := "2.11.8"
 // https://mvnrepository.com/artifact/com.amazonaws/aws-lambda-java-core
 libraryDependencies += "com.amazonaws" % "aws-lambda-java-core" % "1.1.0"
 
-// https://mvnrepository.com/artifact/io.spray/spray-http_2.11
-libraryDependencies += "io.spray" % "spray-http_2.11" % "1.3.4"
-
 // https://mvnrepository.com/artifact/io.spray/spray-json_2.11
 libraryDependencies += "io.spray" % "spray-json_2.11" % "1.3.3"
 

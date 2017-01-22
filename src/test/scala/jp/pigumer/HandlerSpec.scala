@@ -4,6 +4,7 @@ import java.io.{ByteArrayInputStream, ByteArrayOutputStream}
 import java.nio.charset.StandardCharsets
 import java.util.Base64
 
+import org.parboiled.scala.ParsingResult
 import org.specs2.mutable.Specification
 import org.specs2.specification.Scope
 import spray.json._
@@ -20,6 +21,17 @@ class HandlerSpec extends Specification {
       val str = json.parseJson.convertTo[String]
 
       str must equalTo("test")
+    }
+
+    "mediaType" in new Scope {
+      val a: ParsingResult[MediaType] = new MediaTypeRule().parse("multipart/form-data; boundary=----boundary")
+      a.result match {
+        case Some(x) => {
+          x.main must equalTo("multipart")
+          x.params
+        }
+        case None => failure
+      }
     }
 
     "handler" in new Scope {
